@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ভূগোল অধ্যায় ১ - ইন্টারঅ্যাক্টিভ প্র্যাকটিস</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid #764ba2;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #f8f9fa;
+            padding: 15px;
+            border-bottom: 2px solid #ddd;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            overflow-x: auto;
+        }
+
+        nav button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        nav button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        nav button.active {
+            background: #764ba2;
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+        }
+
+        .content {
+            padding: 30px;
+            min-height: 60vh;
+        }
+
+        .set {
+            display: none;
+        }
+
+        .set.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .set-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .set-title {
+            font-size: 2em;
+            color: #667eea;
+        }
+
+        .score-board {
+            background: #f0f4ff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .question-container {
+            background: #f8f9fa;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid #667eea;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .question-container:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateX(5px);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .timer {
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .timer.warning {
+            background: #ffa94d;
+        }
+
+        .timer.safe {
+            background: #51cf66;
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-left: 50px;
+        }
+
+        .option {
+            background: white;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            background: #e8eef7;
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option.selected {
+            background: #e8eef7;
+            border-color: #667eea;
+        }
+
+        .option.correct {
+            background: #d3f9d8;
+            border-color: #51cf66;
+        }
+
+        .option.incorrect {
+            background: #ffe0e0;
+            border-color: #ff6b6b;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .explanation-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .explanation-text {
+            color: #856404;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #ddd;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-width: 150px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-reset {
+            background: #6c757d;
+            color: white;
+            min-width: 150px;
+        }
+
+        .btn-reset:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .result-message {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: none;
+            font-size: 1.1em;
+        }
+
+        .result-message.correct {
+            background: #d3f9d8;
+            color: #2f9e44;
+            display: block;
+        }
+
+        .result-message.incorrect {
+            background: #ffe0e0;
+            color: #d32f2f;
+            display: block;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 2px solid #ddd;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .options {
+                grid-template-columns: 1fr;
+                margin-left: 0;
+            }
+
+            .question-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            nav {
+                justify-content: flex-start;
+            }
+
+            .set-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        .answer-summary {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .answer-summary h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .summary-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .correct-badge {
+            background: #51cf66;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .incorrect-badge {
+            background: #ff6b6b;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌍 ভূগোল অধ্যায় ১</h1>
+            <p>বহির্জাত প্রক্রিয়া ও তাদের দ্বারা সৃষ্ট ভূমিরূপ</p>
+        </header>
+
+        <nav>
+            <button class="nav-btn active" data-set="1">সেট ১</button>
+            <button class="nav-btn" data-set="2">সেট ২</button>
+            <button class="nav-btn" data-set="3">সেট ৩</button>
+            <button class="nav-btn" data-set="4">সেট ৪</button>
+            <button class="nav-btn" data-set="5">সেট ৫</button>
+            <button class="nav-btn" data-set="6">সেট ৬</button>
+            <button class="nav-btn" data-set="7">সেট ৭</button>
+            <button class="nav-btn" data-set="8">সেট ৮</button>
+        </nav>
+
+        <div class="content">
+            <!-- সেট ১ -->
+            <div class="set active" id="set-1" data-set-number="1">
+                <div class="set-header">
+                    <h2 class="set-title">প্র্যাকটিস সেট - ১</h2>
+                    <div class="score-board">
+                        সঠিক: <span class="correct-count">0</span> / ১৫
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+
+                <!-- প্রশ্ন ১ -->
+                <div class="question-container">
+                    <div class="question-header">
+                        <span class="question-number">১</span>
+                        <span class="timer" data-time="60">১:০০</span>
+                    </div>
+                    <div class="question-text">যে প্রক্রিয়ায় অসমতল বন্ধুরভূমি অপসারিত হয়ে সমতল বা প্রায় সমতলে পরিণত হয় তাকে বলে-</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="a">
+                            <span>(ক) আবহবিকার</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="b">
+                            <span>(খ) অবরোহণ</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="c">
+                            <span>(গ) আরোহণ</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="d" data-correct="true">
+                            <span>(ঘ) ক্ষয়ীভবন</span>
+                        </label>
+                    </div>
+                    <div class="explanation" data-question="1">
+                        <div class="explanation-title">✓ সঠিক উত্তর: (ঘ) ক্ষয়ীভবন</div>
+                        <div class="explanation-text">
+                            ক্ষয়ীভবন হল এমন একটি প্রক্রিয়া যেখানে উচ্চভূমি ধীরে ধীরে ক্ষয়প্রাপ্ত হয়ে সমতল ভূমিতে পরিণত হয়। এটি অবরোহণ (নিম্নীকরণ) এবং আরোহণ (উন্নতকরণ) প্রক্রিয়ার সমন্বিত ফলাফল।
+                        </div>
+                    </div>
+                    <div class="result-message"></div>
+                </div>
+
+                <!-- প্রশ্ন ২ -->
+                <div class="question-container">
+                    <div class="question-header">
+                        <span class="question-number">२</span>
+                        <span class="timer" data-time="60">১:০০</span>
+                    </div>
+                    <div class="question-text">মরুভূমিতে বায়ু দ্বারা বালুকণা উত্থিত এবং অপসারিত হয় যে প্রক্রিয়ার সাহায্যে তাকে বলে-</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q2" value="a">
+                            <span>(ক) অবঘর্ষ</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="b" data-correct="true">
+                            <span>(খ) অপসারণ</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="c">
+                            <span>(গ) লম্ফদান</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="d">
+                            <span>(ঘ) দ্রবণ</span>
+                        </label>
+                    </div>
+                    <div class="explanation" data-question="2">
+                        <div class="explanation-title">✓ সঠিক উত্তর: (খ) অপসারণ</div>
+                        <div class="explanation-text">
+                            অপসারণ (Deflation) হল বায়ু দ্বারা আলো বালিকণা ও ধুলিকণা উত্থিত করে দূরে নিয়ে যাওয়ার প্রক্রিয়া। এটি মরুভূমিতে সবচেয়ে কার্যকর ক্ষয় প্রক্রিয়া।
+                        </div>
+                    </div>
+                    <div class="result-message"></div>
+                </div>
+
+                <!-- প্রশ্ন ৩-১৫ (সংক্ষিপ্ত সংস্করণ) -->
+                <div class="question-container">
+                    <div class="question-header">
+                        <span class="question-number">३</span>
+                        <span class="timer" data-time="60">১:০০</span>
+                    </div>
+                    <div class="question-text">একটি বহির্জাত প্রক্রিয়ার উদাহরণ হলো-</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q3" value="a">
+                            <span>(ক) ভূমিকম্প</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="b">
+                            <span>(খ) অগ্ন্যুৎপাত</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="c">
+                            <span>(গ) পাত স্থানান্তর</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="d" data-correct="true">
+                            <span>(ঘ) নদীর ক্ষয়কার্য</span>
+                        </label>
+                    </div>
+                    <div class="explanation" data-question="3">
+                        <div class="explanation-title">✓ সঠিক উত্তর: (ঘ) নদীর ক্ষয়কার্য</div>
+                        <div class="explanation-text">
+                            নদীর ক্ষয়কার্য একটি বহির্জাত প্রক্রিয়া যা পৃথিবীর পৃষ্ঠে ক্রিয়া করে। অন্যদিকে ভূমিকম্প, অগ্ন্যুৎপাত এবং পাত স্থানান্তর হল অন্তর্জাত প্রক্রিয়া।
+                        </div>
+                    </div>
+                    <div class="result-message"></div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question-header">
+                        <span class="question-number">४</span>
+                        <span class="timer" data-time="60">১:০০</span>
+                    </div>
+                    <div class="question-text">যে প্রাকৃতিক প্রক্রিয়ায় মাটি ও শিলাস্তর অভিকর্ষের টানে উচ্চভূমির ঢাল বেয়ে নীচে নামে তাকে বলে-</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q4" value="a">
+                            <span>(ক) অপসারণ</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="b" data-correct="true">
+                            <span>(খ) ধস</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="c">
+                            <span>(গ) বায়ু ক্ষয়</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="d">
+                            <span>(ঘ) অবঘর্ষ</span>
+                        </label>
+                    </div>
+                    <div class="explanation" data-question="4">
+                        <div class="explanation-title">✓ সঠিক উত্তর: (খ) ধস</div>
+                        <div class="explanation-text">
+                            ধস (Mass Wasting) হল মাধ্যাকর্ষণ শক্তির প্রভাবে মাটি ও শিলা পর্বত গাত্র বেয়ে নিম্নদিকে স্থানান্তরের প্রক্রিয়া।
+                        </div>
+                    </div>
+                    <div class="result-message"></div>
+                </div>
+
+                <!-- প্রশ্ন ৫ -->
+                <div class="question-container">
+                    <div class="question-header">
+                        <span class="question-number">५</span>
+                        <span class="timer" data-time="60">১:०০</span>
+                    </div>
+                    <div class="question-text">পাখির পায়ের মতো বদ্বীপ দেখা যায় যে নদীর মোহানায়-</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q5" value="a">
+                            <span>(ক) মিসিসিপি-মিসৌরি</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="b">
+                            <span>(খ) হোয়াংহো</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="c" data-correct="true">
+                            <span>(গ) গঙ্গা-ব্রহ্মপুত্র</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="d">
+                            <span>(ঘ) নীল</span>
+                        </label>
+                    </div>
+                    <div class="explanation" data-question="5">
+                        <div class="explanation-title">✓ সঠিক উত্তর: (গ) গঙ্গা-ব্রহ্মপুত্র</div>
+                        <div class="explanation-text">
+                            গঙ্গা-ব্রহ্মপুত্র নদীর মোহানায় পাখির পায়ের মতো একটি বদ্বীপ গঠিত হয়েছে। এই বদ্বীপটি বিশ্বের বৃহত্তম বদ্বীপ এবং সুন্দরবন নামে পরিচিত।
+                        </div>
+                    </div>
+                    <div class="result-message"></div>
+                </div>
+
+                <!-- আরও ১০টি প্রশ্ন সংযুক্ত করুন এখানে -->
+
+                <div class="button-group">
+                    <button class="btn btn-submit" onclick="submitSet(1)">সাবমিট করুন</button>
+                    <button class="btn btn-reset" onclick="resetSet(1)">রিসেট করুন</button>
+                </div>
+
+                <div class="answer-summary" style="display: none;">
+                    <h3>📊 আপনার উত্তর সারসংক্ষেপ</h3>
+                    <div id="summary-1"></div>
+                </div>
+            </div>
+
+            <!-- অন্যান্য সেটের জন্য (২-৮) প্লেসহোল্ডার -->
+            <div class="set" id="set-2" data-set-number="2">
+                <div class="set-header">
+                    <h2 class="set-title">প্র্যাকটিস সেট - २</h2>
+                    <div class="score-board">
+                        সঠিক: <span class="correct-count">0</span> / ১५
+                    </div>
+                </div>
+                <p style="text-align: center; color: #999; margin-top: 50px;">সেট ২ শীঘ্রই আপডেট করা হবে...</p>
+            </div>
+
+            <div class="set" id="set-3" data-set-number="3">
+                <p style="text-align: center; color: #999; margin-top: 50px;">সেট ३ শীঘ্রই আপডেট করা হবে...</p>
+            </div>
+
+            <div class="set" id="set-4" data-set-number="4">
+                <p style="text-align: center; color: #999; margin-top: 50px;">সেট ४ শীঘ্রই আপডেট করা হবে...</p>
+            </div>
+
+            <div class="set" id="set-5" data-set-number="5">
+                <p style="text-align: center; color: #999; margin-top: 50px;">সেট ५ শীঘ্রই আপডেট করা হবে...</p>
+            </div>
+
+            <div class="set" id="set-6" data-set-number="6">
+                <p style="text-align: center; color: #999; margin-top: 50px;">সেট ६ শীঘ্রই আপডেট করা হবে...</p>
+            </div>
+
+            <div class="set" id="set-7" data-set-number="7">
+                <p style="text-align: center; color: #999; margin-top: 50px;">সেট ७ শীঘ্রই আপডেট করা হবে...</p>
+            </div>
+
+            <div class="set" id="set-8" data-set-number="8">
+                <p style="text-align: center; color: #999; margin-top: 50px;">সেট ८ শীঘ্রই আপডেট করা হবে...</p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>📚 ভূগোল অধ্যায় ১ - ইন্টারঅ্যাক্টিভ প্র্যাকটিস | সর্বশেষ আপডেট: ২০२६</p>
+        </footer>
+    </div>
+
+    <script>
+        let timers = {};
+
+        // নেভিগেশন ফাংশন
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const setNum = this.dataset.set;
+                
+                // সমস্ত সেট এবং বাটন থেকে active ক্লাস সরান
+                document.querySelectorAll('.set').forEach(s => s.classList.remove('active'));
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                
+                // নতুন সেটকে active করুন
+                document.getElementById('set-' + setNum).classList.add('active');
+                this.classList.add('active');
+
+                // টাইমার শুরু করুন
+                startTimers(setNum);
+            });
+        });
+
+        // টাইমার শুরু করার ফাংশন
+        function startTimers(setNum) {
+            clearAllTimers();
+            document.querySelectorAll(`#set-${setNum} .timer`).forEach(timer => {
+                let time = parseInt(timer.dataset.time);
+                const timerId = setInterval(() => {
+                    time--;
+                    const minutes = Math.floor(time / 60);
+                    const seconds = time % 60;
+                    timer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    
+                    // রঙ পরিবর্তন
+                    if (time <= 10) {
+                        timer.classList.remove('safe', 'warning');
+                        timer.classList.add('warning');
+                    } else if (time <= 30) {
+                        timer.classList.remove('safe', 'warning');
+                        timer.classList.add('warning');
+                    } else {
+                        timer.classList.remove('warning');
+                        timer.classList.add('safe');
+                    }
+                    
+                    if (time === 0) {
+                        clearInterval(timerId);
+                        timer.textContent = '০:००';
+                        timer.classList.add('warning');
+                    }
+                }, 1000);
+            });
+        }
+
+        // সমস্ত টাইমার বন্ধ করার ফাংশন
+        function clearAllTimers() {
+            Object.values(timers).forEach(id => clearInterval(id));
+            timers = {};
+        }
+
+        // অপশন সিলেক্ট করার ইভেন্ট
+        document.querySelectorAll('.option input[type="radio"]').forEach(input => {
+            input.addEventListener('change', function() {
+                // সমস্ত অপশন থেকে selected ক্লাস সরান
+                this.closest('.options').querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                // বর্তমান অপশনে selected ক্লাস যোগ করুন
+                this.closest('.option').classList.add('selected');
+            });
+        });
+
+        // সাবমিট ফাংশন
+        function submitSet(setNum) {
+            let correctCount = 0;
+            let totalQuestions = 0;
+            const set = document.getElementById(`set-${setNum}`);
+            
+            set.querySelectorAll('.question-container').forEach((container, index) => {
+                const questionNum = index + 1;
+                const selectedRadio = container.querySelector('input[type="radio"]:checked');
+                const selectedOption = selectedRadio ? selectedRadio.closest('.option') : null;
+                const correctOption = container.querySelector('[data-correct="true"]').closest('.option');
+                const resultMessage = container.querySelector('.result-message');
+                const explanation = container.querySelector('.explanation');
+
+                totalQuestions++;
+
+                if (selectedOption) {
+                    selectedOption.classList.add(selectedOption === correctOption ? 'correct' : 'incorrect');
+                    
+                    if (selectedOption === correctOption) {
+                        correctCount++;
+                        resultMessage.classList.remove('incorrect');
+                        resultMessage.classList.add('correct');
+                        resultMessage.textContent = '✓ সঠিক উত্তর!';
+                    } else {
+                        resultMessage.classList.remove('correct');
+                        resultMessage.classList.add('incorrect');
+                        resultMessage.textContent = '✗ ভুল উত্তর!';
+                        correctOption.classList.add('correct');
+                    }
+                } else {
+                    resultMessage.classList.remove('correct');
+                    resultMessage.classList.add('incorrect');
+                    resultMessage.textContent = '⚠ কোনো উত্তর নির্বাচন করা হয়নি!';
+                    correctOption.classList.add('correct');
+                }
+
+                explanation.classList.add('show');
+            });
+
+            // স্কোর আপডেট করুন
+            set.querySelector('.correct-count').textContent = correctCount;
+
+            // প্রগতি বার আপডেট করুন
+            const progressFill = set.querySelector('.progress-fill');
+            progressFill.style.width = (correctCount / totalQuestions * 100) + '%';
+
+            // সারসংক্ষেপ দেখান
+            const summary = set.querySelector('.answer-summary');
+            summary.style.display = 'block';
+
+            // সাবমিট বাটন ডিসেবল করুন
+            const submitBtn = set.querySelector('.btn-submit');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'সাবমিট হয়েছে';
+        }
+
+        // রিসেট ফাংশন
+        function resetSet(setNum) {
+            const set = document.getElementById(`set-${setNum}`);
+            
+            // সমস্ত রেডিও বাটন আনচেক করুন
+            set.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+
+            // সমস্ত স্টাইল সরান
+            set.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+
+            // ব্যাখ্যা লুকান
+            set.querySelectorAll('.explanation').forEach(exp => {
+                exp.classList.remove('show');
+            });
+
+            // রেজাল্ট মেসেজ লুকান
+            set.querySelectorAll('.result-message').forEach(msg => {
+                msg.classList.remove('correct', 'incorrect');
+            });
+
+            // স্কোর রিসেট করুন
+            set.querySelector('.correct-count').textContent = '0';
+
+            // প্রগতি বার রিসেট করুন
+            set.querySelector('.progress-fill').style.width = '0%';
+
+            // সারসংক্ষেপ লুকান
+            set.querySelector('.answer-summary').style.display = 'none';
+
+            // সাবমিট বাটন সক্ষম করুন
+            const submitBtn = set.querySelector('.btn-submit');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'সাবমিট করুন';
+
+            // টাইমার পুনরায় শুরু করুন
+            startTimers(setNum);
+        }
+
+        // প্রাথমিক টাইমার শুরু করুন
+        startTimers(1);
+    </script>
+</body>
+</html>
