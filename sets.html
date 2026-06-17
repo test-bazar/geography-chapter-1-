@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ভূগোল অধ্যায় ১ - প্র্যাকটিস সেট</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid #764ba2;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #f8f9fa;
+            padding: 15px;
+            border-bottom: 2px solid #ddd;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        nav button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        nav button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        nav button.active {
+            background: #764ba2;
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .set {
+            display: none;
+        }
+
+        .set.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .set-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            text-align: center;
+        }
+
+        .question {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateX(5px);
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-left: 45px;
+        }
+
+        .option {
+            background: white;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            background: #e8eef7;
+            border-color: #667eea;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 2px solid #ddd;
+        }
+
+        .set-counter {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .options {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            nav button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌍 ভূগোল অধ্যায় ১</h1>
+            <p>বহির্জাত প্রক্রিয়া ও তাদের দ্বারা সৃষ্ট ভূমিরূপ</p>
+        </header>
+
+        <nav>
+            <button class="nav-btn active" data-set="1">সেট ১</button>
+            <button class="nav-btn" data-set="2">সেট ২</button>
+            <button class="nav-btn" data-set="3">সেট ৩</button>
+            <button class="nav-btn" data-set="4">সেট ৪</button>
+            <button class="nav-btn" data-set="5">সেট ৫</button>
+            <button class="nav-btn" data-set="6">সেট ৬</button>
+            <button class="nav-btn" data-set="7">সেট ৭</button>
+            <button class="nav-btn" data-set="8">সেট ৮</button>
+        </nav>
+
+        <div class="content">
+            <!-- প্র্যাকটিস সেট - ১ -->
+            <div class="set active" id="set-1">
+                <div class="set-counter">প্র্যাকটিস সেট - ১</div>
+                <h2 class="set-title">সেট ১</h2>
+                
+                <div class="question">
+                    <span class="question-number">১</span>
+                    <div class="question-text">যে প্রক্রিয়ায় অসমতল বন্ধুরভূমি অপসারিত হয়ে সমতল বা প্রায় সমতলে পরিণত হয় তাকে বলে-</div>
+                    <div class="options">
+                        <div class="option">(ক) আবহবিকার</div>
+                        <div class="option">(খ) অবরোহণ</div>
+                        <div class="option">(গ) আরোহণ</div>
+                        <div class="option">(ঘ) ক্ষয়ীভবন</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">२</span>
+                    <div class="question-text">মরুভূমিতে বায়ু দ্বারা বালুকণা উত্থিত এবং অপসারিত হয় যে প্রক্রিয়ার সাহায্যে তাকে বলে-</div>
+                    <div class="options">
+                        <div class="option">(ক) অবঘর্ষ</div>
+                        <div class="option">(খ) অপসারণ</div>
+                        <div class="option">(গ) লম্ফদান</div>
+                        <div class="option">(ঘ) দ্রবণ</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">३</span>
+                    <div class="question-text">একটি বহির্জাত প্রক্রিয়ার উদাহরণ হলো-</div>
+                    <div class="options">
+                        <div class="option">(ক) ভূমিকম্প</div>
+                        <div class="option">(খ) অগ্ন্যুৎপাত</div>
+                        <div class="option">(গ) পাত স্থানান্তর</div>
+                        <div class="option">(ঘ) নদীর ক্ষয়কার্য</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">४</span>
+                    <div class="question-text">যে প্রাকৃতিক প্রক্রিয়ায় মাটি ও শিলাস্তর অভিকর্ষের টানে উচ্চভূমির ঢাল বেয়ে নীচে নামে তাকে বলে-</div>
+                    <div class="options">
+                        <div class="option">(ক) অপসারণ</div>
+                        <div class="option">(খ) ধস</div>
+                        <div class="option">(গ) বায়ু ক্ষয়</div>
+                        <div class="option">(ঘ) অবঘর্ষ</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">५</span>
+                    <div class="question-text">পাখির পায়ের মতো বদ্বীপ দেখা যায় যে নদীর মোহানায়-</div>
+                    <div class="options">
+                        <div class="option">(ক) মিসিসিপি-মিসৌরি</div>
+                        <div class="option">(খ) হোয়াংহো</div>
+                        <div class="option">(গ) গঙ্গা-ব্রহ্মপুত্র</div>
+                        <div class="option">(ঘ) নীল</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">६</span>
+                    <div class="question-text">আরোহণ প্রক্রিয়ায় সৃষ্ট একটি ভূমিরূপ হলো-</div>
+                    <div class="options">
+                        <div class="option">(ক) গিরিখাত</div>
+                        <div class="option">(খ) রসে মতানে</div>
+                        <div class="option">(গ) বালিয়াড়ি</div>
+                        <div class="option">(ঘ) পলল শঙ্কু</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">७</span>
+                    <div class="question-text">ইনসেলবার্জ আরও ক্ষয় পেয়ে গম্বুজাকার ঢিবিতে পরিণত হলে তাকে বলে-</div>
+                    <div class="options">
+                        <div class="option">(ক) ক্যাসেল কপিজ</div>
+                        <div class="option">(খ) বোর্নহার্ট</div>
+                        <div class="option">(গ) গৌর</div>
+                        <div class="option">(ঘ) জিউগেন</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">८</span>
+                    <div class="question-text">নিম্নভূমির উচ্চতা বৃদ্ধি পায় যে প্রক্রিয়ায়-</div>
+                    <div class="options">
+                        <div class="option">(ক) আরোহণ</div>
+                        <div class="option">(খ) অবরোহণ</div>
+                        <div class="option">(গ) অবঘর্ষ</div>
+                        <div class="option">(ঘ) ক্ষয়</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">९</span>
+                    <div class="question-text">জলপ্রপাতের পাদদেশে জলাঘাতে গঠিত গর্তকে বলে-</div>
+                    <div class="options">
+                        <div class="option">(ক) মন্থকূপ</div>
+                        <div class="option">(খ) প্রপাত কূপ</div>
+                        <div class="option">(গ) খাত</div>
+                        <div class="option">(ঘ) গিরিখাত</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">१०</span>
+                    <div class="question-text">হিমালয় পর্বতের নীলকণ্ঠ শৃঙ্গ একটি-</div>
+                    <div class="options">
+                        <div class="option">(ক) ড্রামলিন</div>
+                        <div class="option">(খ) করি হ্রদ</div>
+                        <div class="option">(গ) প্লায়া</div>
+                        <div class="option">(ঘ) পিরামিড চূড়া</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">११</span>
+                    <div class="question-text">মরু অঞ্চলে পর্বতের পাদদেশে প্রস্তরময় ঈষৎ ঢালু বিস্তীর্ণ সমভূমিকে বলা হয়-</div>
+                    <div class="options">
+                        <div class="option">(ক) পেডিমেন্ট</div>
+                        <div class="option">(খ) বাজাদা</div>
+                        <div class="option">(গ) প্লায়া</div>
+                        <div class="option">(ঘ) অ্যালুভিয়াল ফ্যান</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">१२</span>
+                    <div class="question-text">'Basket of egg topography' যে ভূমিরূপকে বলা হয়-</div>
+                    <div class="options">
+                        <div class="option">(ক) বাজাদা</div>
+                        <div class="option">(খ) ক্রেভাস</div>
+                        <div class="option">(গ) ড্রামলিন</div>
+                        <div class="option">(ঘ) এসকার</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">१३</span>
+                    <div class="question-text">দুটি নদী অববাহিকাকে পৃথককারী উচ্চভূমিকে বলে-</div>
+                    <div class="options">
+                        <div class="option">(ক) দোয়াব</div>
+                        <div class="option">(খ) উপত্যকা</div>
+                        <div class="option">(গ) জলবিভাজক</div>
+                        <div class="option">(ঘ) পর্বত</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">१४</span>
+                    <div class="question-text">বায়ুর সঞ্চয়কার্যের ফলে গঠিত হয়-</div>
+                    <div class="options">
+                        <div class="option">(ক) করি</div>
+                        <div class="option">(খ) বার্খান বালিয়াড়ি</div>
+                        <div class="option">(গ) গিরিখাত</div>
+                        <div class="option">(ঘ) ক্যানিয়ন</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">१५</span>
+                    <div class="question-text">শুষ্ক অঞ্চলের গভীর গিরিখাতকে বলা হয়-</div>
+                    <div class="options">
+                        <div class="option">(ক) ক্যানিয়ন</div>
+                        <div class="option">(খ) 'V' আকৃতির উপত্যকা</div>
+                        <div class="option">(গ) মন্থকূপ</div>
+                        <div class="option">(ঘ) পটহোল</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- প্র্যাকটিস সেট - ২ -->
+            <div class="set" id="set-2">
+                <div class="set-counter">প্র্যাকটিস সেট - ২</div>
+                <h2 class="set-title">সেট ২</h2>
+                
+                <div class="question">
+                    <span class="question-number">१</span>
+                    <div class="question-text">প্রবল উত্তাল জলরাশি যখন জলপ্রপাত রূপে নীচে নেমে আসে তাকে বলে-</div>
+                    <div class="options">
+                        <div class="option">(ক) কাসকেড</div>
+                        <div class="option">(খ) জলপ্রপাত</div>
+                        <div class="option">(গ) প্রপাত কূপ</div>
+                        <div class="option">(ঘ) মন্থকূপ</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">२</span>
+                    <div class="question-text">পার্বত্য হিমবাহের পৃষ্ঠদেশে সৃষ্ট গভীর ফাটলগুলিকে বলে-</div>
+                    <div class="options">
+                        <div class="option">(ক) নুনাটাক</div>
+                        <div class="option">(খ) ক্রেভাস</div>
+                        <div class="option">(গ) সার্ক</div>
+                        <div class="option">(ঘ) করি</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">३</span>
+                    <div class="question-text">নদীর পাড়ের উত্তল অংশে পলি সঞ্চয়কে বলা হয়-</div>
+                    <div class="options">
+                        <div class="option">(ক) হাওড়</div>
+                        <div class="option">(খ) বিন্দুবার</div>
+                        <div class="option">(গ) পটহোল</div>
+                        <div class="option">(ঘ) প্লাবনভূমি</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">४</span>
+                    <div class="question-text">অবরোহণ প্রক্রিয়ায় প্রাকৃতিক শক্তির ক্ষয়ের শেষ সীমা হলো-</div>
+                    <div class="options">
+                        <div class="option">(ক) পর্বত</div>
+                        <div class="option">(খ) সমুদ্র পৃষ্ঠ</div>
+                        <div class="option">(গ) হ্রদ</div>
+                        <div class="option">(ঘ) নদী</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">५</span>
+                    <div class="question-text">নদী দ্বারা বিচ্ছিন্ন বহিঃবিধৌত সমভূমিকে বলা হয়-</div>
+                    <div class="options">
+                        <div class="option">(ক) কেম</div>
+                        <div class="option">(খ) ড্রামলিন</div>
+                        <div class="option">(গ) এসকার</div>
+                        <div class="option">(ঘ) নব</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">६</span>
+                    <div class="question-text">লবণযুক্ত শিলাস্তরের ওপর নদীর প্রধান ক্ষয় প্রক্রিয়াটি হলো-</div>
+                    <div class="options">
+                        <div class="option">(ক) অবঘর্ষ ক্ষয়</div>
+                        <div class="option">(খ) দ্রবণ</div>
+                        <div class="option">(গ) ঘর্ষণ</div>
+                        <div class="option">(ঘ) লম্ফদান</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">७</span>
+                    <div class="question-text">'গ্রেড' (Grade) কথাটি প্রথম ব্যবহার করেন-</div>
+                    <div class="options">
+                        <div class="option">(ক) গিলবার্ট</div>
+                        <div class="option">(খ) ওলিয়ট</div>
+                        <div class="option">(গ) কান্ট</div>
+                        <div class="option">(ঘ) হাম্বোল্ট</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">८</span>
+                    <div class="question-text">মন্থকূপ সৃষ্টি হয় নদীর যে প্রক্রিয়ার মাধ্যমে-</div>
+                    <div class="options">
+                        <div class="option">(ক) অবঘর্ষ</div>
+                        <div class="option">(খ) ঘর্ষণ</div>
+                        <div class="option">(গ) দ্রবণ</div>
+                        <div class="option">(ঘ) লম্ফদান</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">९</span>
+                    <div class="question-text">মরু সমপ্রায় ভূমির কঠিন শিলা গঠিত অনুচ্চ পাহাড়গুলিকে বলে-</div>
+                    <div class="options">
+                        <div class="option">(ক) ইয়ারদাং</div>
+                        <div class="option">(খ) জিউগেন</div>
+                        <div class="option">(গ) ইনসেলবার্জ</div>
+                        <div class="option">(ঘ) বোর্নহার্ট</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">१०</span>
+                    <div class="question-text">পিছন অংশে খাড়া দেওয়াল, মধ্যভাগে গর্ত ও সামনে চৌকাঠের মতো অংশ বিশিষ্ট ভূমিরূপ-</div>
+                    <div class="options">
+                        <div class="option">(ক) ইনসেলবার্জ</div>
+                        <div class="option">(খ) জিউগেন</div>
+                        <div class="option">(গ) বোর্নহার্ট</div>
+                        <div class="option">(ঘ) গৌর</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">११</span>
+                    <div class="question-text">দুটি কেটলের মধ্যবর্তী উচ্চভূমি হলো-</div>
+                    <div class="options">
+                        <div class="option">(ক) কেম</div>
+                        <div class="option">(খ) নব</div>
+                        <div class="option">(গ) হর্ন</div>
+                        <div class="option">(ঘ) দোয়াব</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">१२</span>
+                    <div class="question-text">ক্ষয়সীমা ধারণার প্রবর্তক হলেন-</div>
+                    <div class="options">
+                        <div class="option">(ক) চেম্বারলিন</div>
+                        <div class="option">(খ) সালিসবারি</div>
+                        <div class="option">(গ) পাওয়েল</div>
+                        <div class="option">(ঘ) হার্ন</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">१३</span>
+                    <div class="question-text">ভারতের 'নায়াগ্রা' বলা হয় কোন জলপ্রপাতকে?</div>
+                    <div class="options">
+                        <div class="option">(ক) কুঞ্চিকল</div>
+                        <div class="option">(খ) চিত্রকূট</div>
+                        <div class="option">(গ) যোগ</div>
+                        <div class="option">(ঘ) গাভাসিনী</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">१४</span>
+                    <div class="question-text">হিমবাহ উপত্যকা প্রধানত কীরূপ হয়?</div>
+                    <div class="options">
+                        <div class="option">(ক) সংকীর্ণ V-আকৃতির</div>
+                        <div class="option">(খ) প্রশস্ত V-আকৃতির</div>
+                        <div class="option">(গ) U-আকৃতির</div>
+                        <div class="option">(ঘ) I-আকৃতির</div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <span class="question-number">१५</span>
+                    <div class="question-text">হিমবাহ ও পর্বতগাত্রের মধ্যে সৃষ্ট ফাটলকে বলে-</div>
+                    <div class="options">
+                        <div class="option">(ক) ক্রেভাস</div>
+                        <div class="option">(খ) বার্গশৃন্ড</div>
+                        <div class="option">(গ) নুনাটাক</div>
+                        <div class="option">(ঘ) সার্ক</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- প্র্যাকটিস সেট - ৩ থেকে ৮ একই ফরম্যাটে... -->
+            <!-- এখানে স্থান সাশ্রয়ের জন্য সংক্ষিপ্ত করা হয়েছে -->
+
+            <div class="set" id="set-3">
+                <div class="set-counter">প্র্যাকটিস সেট - ৩</div>
+                <h2 class="set-title">সেট ৩</h2>
+                <p style="text-align: center; color: #999; margin-top: 50px;">এই সেটের প্রশ্নগুলি index.html ফাইলে উপলব্ধ</p>
+            </div>
+
+            <div class="set" id="set-4">
+                <div class="set-counter">প্র্যাকটিস সেট - ৪</div>
+                <h2 class="set-title">সেট ৪</h2>
+                <p style="text-align: center; color: #999; margin-top: 50px;">এই সেটের প্রশ্নগুলি index.html ফাইলে উপলব্ধ</p>
+            </div>
+
+            <div class="set" id="set-5">
+                <div class="set-counter">প্র্যাকটিস সেট - ৫</div>
+                <h2 class="set-title">সেট ৫</h2>
+                <p style="text-align: center; color: #999; margin-top: 50px;">এই সেটের প্রশ্নগুলি index.html ফাইলে উপলব্ধ</p>
+            </div>
+
+            <div class="set" id="set-6">
+                <div class="set-counter">প্র্যাকটিস সেট - ৬</div>
+                <h2 class="set-title">সেট ৬</h2>
+                <p style="text-align: center; color: #999; margin-top: 50px;">এই সেটের প্রশ্নগুলি index.html ফাইলে উপলব্ধ</p>
+            </div>
+
+            <div class="set" id="set-7">
+                <div class="set-counter">প্র্যাকটিস সেট - ৭</div>
+                <h2 class="set-title">সেট ৭</h2>
+                <p style="text-align: center; color: #999; margin-top: 50px;">এই সেটের প্রশ্নগুলি index.html ফাইলে উপলব্ধ</p>
+            </div>
+
+            <div class="set" id="set-8">
+                <div class="set-counter">প্র্যাকটিস সেট - ৮</div>
+                <h2 class="set-title">সেট ৮</h2>
+                <p style="text-align: center; color: #999; margin-top: 50px;">এই সেটের প্রশ্নগুলি index.html ফাইলে উপলব্ধ</p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>📚 ভূগোল অধ্যায় ১ - প্র্যাকটিস সেট | সর্বশেষ আপডেট: ২০২৬</p>
+        </footer>
+    </div>
+
+    <script>
+        // Navigation button functionality
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sets = document.querySelectorAll('.set');
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons and sets
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                sets.forEach(set => set.classList.remove('active'));
+
+                // Add active class to clicked button and corresponding set
+                this.classList.add('active');
+                const setId = 'set-' + this.dataset.set;
+                document.getElementById(setId).classList.add('active');
+            });
+        });
+
+        // Smooth scroll to top when set changes
+        window.addEventListener('beforeunload', () => {
+            window.scrollTo(0, 0);
+        });
+    </script>
+</body>
+</html>
